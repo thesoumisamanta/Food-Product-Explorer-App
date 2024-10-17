@@ -1,8 +1,19 @@
 import React from 'react';
-import HomePage from './pages/HomePage';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import ProductList from './components/ProductList';
+import ProductDetail from './components/ProductDetail'; // Import the ProductDetail component
 
 const App = () => {
-  return <HomePage />;
+  return (
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path="/" element={<ProductList />} />
+        <Route path="/product/:barcode" element={<ProductDetail />} />
+      </Routes>
+    </Router>
+  );
 };
 
 export default App;

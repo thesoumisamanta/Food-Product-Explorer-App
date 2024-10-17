@@ -13,6 +13,18 @@ export const getProductsByName = createAsyncThunk('products/getProductsByName', 
     return response.products;
 });
 
+// New thunk to get product details by barcode
+export const getProductDetailsByBarcode = createAsyncThunk(
+    'products/getProductDetailsByBarcode',
+    async (barcode) => {
+        const response = await fetchProductByBarcode(barcode);
+        if (response.status === 0) {
+            throw new Error('Product not found');
+        }
+        return response.product;
+    }
+);
+
 export const getProductByBarcode = createAsyncThunk('products/getProductByBarcode', async (barcode) => {
     const response = await fetchProductByBarcode(barcode);
     return [response.product]; // Wrap product in array to maintain structure
@@ -40,6 +52,7 @@ const productSlice = createSlice({
         sortedProducts: [], // Keep a separate array for sorted products
         categories: [],
         loading: false, // Track loading status
+        productDetails: null, // Add a new state to hold product details
     },
     reducers: {
         sortProducts(state, action) {
@@ -76,6 +89,13 @@ const productSlice = createSlice({
                 state.loading = false;
                 state.products = action.payload;
                 state.sortedProducts = action.payload; // Sync sortedProducts with the fetched ones
+            })
+            .addCase(getProductDetailsByBarcode.pending, (state) => {
+                state.loading = true; // Set loading state when fetching product details
+            })
+            .addCase(getProductDetailsByBarcode.fulfilled, (state, action) => {
+                state.loading = false;
+                state.productDetails = action.payload; // Store product details in the state
             })
             .addCase(getAllProducts.pending, (state) => {
                 state.loading = true;
