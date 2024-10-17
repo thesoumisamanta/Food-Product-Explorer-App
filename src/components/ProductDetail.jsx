@@ -1,28 +1,37 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import PulseLoader from 'react-spinners/PulseLoader'; // Import PulseLoader
 import { getProductDetailsByBarcode } from '../features/productSlice';
 
 const ProductDetail = () => {
     const { barcode } = useParams();
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { productDetails, loading } = useSelector((state) => state.products);
 
     useEffect(() => {
         if (barcode) {
-            console.log('Fetching product with barcode:', barcode); // Debug log
+            console.log('Fetching product with barcode:', barcode);
             dispatch(getProductDetailsByBarcode(barcode));
         }
     }, [barcode, dispatch]);
 
+    // Handle "Back to Home" button click
+    const handleBackToHome = () => {
+        navigate('/');
+    };
+
+    // Show loader while loading product details
     if (loading) {
         return (
             <div className="flex justify-center items-center min-h-screen">
-                <div className="text-xl">Loading...</div>
+                <PulseLoader color="#3498db" loading={true} size={15} /> {/* Spinner */}
             </div>
         );
     }
 
+    // If product not found
     if (!productDetails) {
         return (
             <div className="flex flex-col justify-center items-center min-h-screen">
@@ -36,14 +45,22 @@ const ProductDetail = () => {
         <div className="container mx-auto px-4 py-8">
             <div className="max-w-4xl mx-auto">
                 {/* Product Header */}
-                <div className="mb-8">
+                <div className="mb-8 text-center">
                     <h1 className="text-3xl font-bold mb-4">{productDetails.product_name}</h1>
                     <img
                         src={productDetails.image_url}
                         alt={productDetails.product_name}
-                        className="w-full max-w-md mx-auto rounded-lg shadow-lg"
+                        className="w-36 mx-auto rounded-lg shadow-lg"
                     />
                 </div>
+
+                {/* Back to Home Button */}
+                <button
+                    onClick={handleBackToHome}
+                    className="mb-8 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300"
+                >
+                    Back to Home
+                </button>
 
                 {/* Product Information Sections */}
                 <div className="grid gap-6">
