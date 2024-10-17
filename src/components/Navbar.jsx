@@ -5,7 +5,7 @@ import PulseLoader from 'react-spinners/PulseLoader';
 
 const Navbar = () => {
     const dispatch = useDispatch();
-    const { loading } = useSelector((state) => state.products);  // Use global loading state
+    const { loading } = useSelector((state) => state.products);
     const categories = useSelector((state) => state.products.categories);
     const [searchTerm, setSearchTerm] = useState('');
     const [barcode, setBarcode] = useState('');
@@ -15,15 +15,25 @@ const Navbar = () => {
         dispatch(getCategories());  // Fetch categories on mount
     }, [dispatch]);
 
-    const handleSearch = () => {
-        dispatch(getProductsByName(searchTerm));
-    };
-
-    const handleBarcodeSearch = () => {
-        if (barcode) {
-            dispatch(getProductByBarcode(barcode));
+    // Fetch products by name as the user types
+    useEffect(() => {
+        if (searchTerm) {
+            const debounceTimeout = setTimeout(() => {
+                dispatch(getProductsByName(searchTerm));
+            }, 300); // Adjust debounce time as needed
+            return () => clearTimeout(debounceTimeout);
         }
-    };
+    }, [searchTerm, dispatch]);
+
+    // Fetch product by barcode as the user types
+    useEffect(() => {
+        if (barcode) {
+            const debounceTimeout = setTimeout(() => {
+                dispatch(getProductByBarcode(barcode));
+            }, 300); // Adjust debounce time as needed
+            return () => clearTimeout(debounceTimeout);
+        }
+    }, [barcode, dispatch]);
 
     const handleCategoryChange = (e) => {
         const category = e.target.value;
@@ -38,47 +48,57 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="bg-blue-500 p-4 flex justify-between">
-            <input
-                type="text"
-                className="p-2 rounded"
-                placeholder="Search by name"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <button onClick={handleSearch} className="bg-white p-2 rounded">Search</button>
+        <nav className="bg-white shadow-md p-4 flex flex-col md:flex-row justify-between">
+            <div className="flex items-center">
+                <a href="/" className="text-2xl font-bold text-green-500">
+                    Food Explorer
+                </a>
+            </div>
 
-            <input
-                type="text"
-                className="p-2 rounded"
-                placeholder="Search by barcode"
-                value={barcode}
-                onChange={(e) => setBarcode(e.target.value)}
-            />
-            <button onClick={handleBarcodeSearch} className="bg-white p-2 rounded">Search Barcode</button>
+            {/* Input Fields */}
+            <div className="flex space-x-4 items-center">
+                <input
+                    type="text"
+                    className="px-3 py-2 border border-gray-300 rounded-md"
+                    placeholder="Search by name..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                />
 
-            <select onChange={handleCategoryChange} value={selectedCategory} className="p-2 rounded">
-                <option value="">Select Category</option>
-                {categories.map((cat) => (
-                    <option key={cat.id} value={cat.name}>
-                        {cat.name}
-                    </option>
-                ))}
-            </select>
+                <input
+                    type="text"
+                    className="px-3 py-2 border border-gray-300 rounded-md"
+                    placeholder="Search by barcode..."
+                    value={barcode}
+                    onChange={(e) => setBarcode(e.target.value)}
+                />
 
-            <select onChange={handleSort} className="p-2 rounded">
-                <option value="">Sort By</option>
-                <option value="name-asc">Name (A-Z)</option>
-                <option value="name-desc">Name (Z-A)</option>
-                <option value="nutrition-asc">Nutrition Grade (Ascending)</option>
-                <option value="nutrition-desc">Nutrition Grade (Descending)</option>
-            </select>
+                <select
+                    value={selectedCategory}
+                    onChange={handleCategoryChange}
+                    className="px-3 py-2 border border-gray-300 rounded-md"
+                >
+                    <option value="">All Categories</option>
+                    {categories.map((cat) => (
+                        <option key={cat.id} value={cat.name}>
+                            {cat.name}
+                        </option>
+                    ))}
+                </select>
 
-            {/* {loading && (
-                <div className="flex justify-center items-center">
-                    <PulseLoader color="#ffffff" loading={true} size={10} />
-                </div>
-            )} */}
+                <select
+                    onChange={handleSort}
+                    className="px-3 py-2 border border-gray-300 rounded-md"
+                >
+                    <option value="">Sort by</option>
+                    <option value="name-asc">Name (A-Z)</option>
+                    <option value="name-desc">Name (Z-A)</option>
+                    <option value="nutrition-asc">Nutrition Grade (Low to High)</option>
+                    <option value="nutrition-desc">Nutrition Grade (High to Low)</option>
+                </select>
+            </div>
+
+           
         </nav>
     );
 };
