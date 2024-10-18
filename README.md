@@ -32,7 +32,8 @@ To get started with the Food Explorer App, follow these steps:
    cd <repository-name>
 
 # Install Dependencies: Install the required libraries using npm:
-npm install
+    ```bash
+    npm install
 
 # Install Additional Packages: Install the gh-pages package for deployment:
 npm install gh-pages --save-dev
