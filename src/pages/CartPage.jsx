@@ -1,22 +1,6 @@
-{/* <a href="https://www.flaticon.com/free-icons/shopping-cart" title="shopping cart icons">Shopping cart icons created by Freepik - Flaticon</a> */}
-
-{/* <a href="https://www.flaticon.com/free-icons/add-to-cart" title="add to cart icons">Add to cart icons created by Freepik - Flaticon</a> */}
-
-{/* <a href="https://www.flaticon.com/free-icons/wishlist" title="wishlist icons">Wishlist icons created by Pixel perfect - Flaticon</a> */}
-
-{/* <a href="https://www.flaticon.com/free-icons/wishlist" title="wishlist icons">Wishlist icons created by Freepik - Flaticon</a> */}
-
-{/* <a href="https://www.flaticon.com/free-icons/back-to-home" title="back to home icons">Back to home icons created by Fantasyou - Flaticon</a> */}
-
-{/* <a href="https://www.flaticon.com/free-icons/overview" title="overview icons">Overview icons created by Kiranshastry - Flaticon</a> */}
-
-
-
-
-
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeFromCart, clearFlashMessage } from '../features/cartSlice'; // Import your actions
+import { removeFromCart, clearFlashMessage } from '../features/cartSlice'; 
 
 const CartPage = () => {
     const dispatch = useDispatch();
@@ -28,11 +12,11 @@ const CartPage = () => {
     };
 
     const handleCheckout = () => {
-        // Add your checkout logic here
+        
         alert("Proceeding to checkout...");
     };
 
-    // Clear flash message after 2 seconds
+    
     React.useEffect(() => {
         if (flashMessage) {
             const timeout = setTimeout(() => {
@@ -43,12 +27,12 @@ const CartPage = () => {
     }, [flashMessage, dispatch]);
 
     const totalAmount = cartItems.reduce((total, item) => {
-        const itemPrice = item.price || 0; // Fallback to 0 if price is undefined
+        const itemPrice = item.price || 0; 
         return total + itemPrice;
     }, 0);
 
     return (
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <h1 className="text-2xl font-bold mb-4">Shopping Cart</h1>
 
             {flashMessage && (
@@ -66,7 +50,7 @@ const CartPage = () => {
                             <li key={item.id} className="flex justify-between items-center border-b pb-4">
                                 <div>
                                     <h2 className="text-lg font-semibold">{item.name}</h2>
-                                    <p>Price: ${item.price ? item.price.toFixed(2) : 'N/A'}</p> {/* Safeguard here */}
+                                    <p>Price: ${item.price ? item.price.toFixed(2) : 'N/A'}</p>
                                 </div>
                                 <button
                                     onClick={() => handleRemoveFromCart(item.id)}
@@ -80,14 +64,9 @@ const CartPage = () => {
 
                     <div className="mt-6 flex justify-between items-center">
                         <h3 className="text-lg font-semibold">
-                            Total: ${totalAmount.toFixed(2)} {/* Safeguard here */}
+                            Total: ${totalAmount.toFixed(2)} 
                         </h3>
-                        <button
-                            onClick={handleCheckout}
-                            className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300"
-                        >
-                            Checkout
-                        </button>
+                        
                     </div>
                 </div>
             )}

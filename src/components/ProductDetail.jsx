@@ -77,8 +77,8 @@ const ProductDetail = () => {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8 mt-10">
-            <div className="max-w-4xl mx-auto mt-10">
+        <div className="container mx-auto px-4 py-8">
+            <div className="max-w-4xl mx-auto">
                 
                 {flashMessage && (
                     <div className="mb-4 p-2 bg-green-100 text-green-700 rounded flex justify-between items-center">

@@ -8,27 +8,25 @@ const Wishlist = () => {
     const navigate = useNavigate();
     const { wishlistItems } = useSelector((state) => state.cart);
 
-    
     const handleRemoveFromWishlist = (id) => {
         dispatch(removeFromWishlist(id));
     };
 
-    
     const handleAddMoreItems = () => {
         navigate('/');
     };
 
     return (
-        <div className="container mx-auto px-4 py-8 mt-20">
+        <div className="container mx-auto px-4 py-8">
             <h1 className="text-3xl font-bold mb-6">My Wishlist</h1>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-6 px-24">
                 {wishlistItems.map((item) => (
-                    <div key={item.id} className="relative bg-white rounded-lg shadow" style={{ height: '300px', width: '150px' }}>
+                    <div key={item.id} className="relative bg-white rounded-lg shadow" style={{ height: '250px', width: '200px' }}>
                         <img
-                            src={item.imageUrl} 
-                            alt={item.name} 
-                            className="h-full object-cover rounded-lg"
-                            style={{ display: 'block', margin: '0 auto' }} 
+                            src={item.imageUrl}
+                            alt={item.name}
+                            className="h-52 object-cover rounded-lg"
+                            style={{ display: 'block', margin: '0 auto' }}
                         />
                         <button
                             onClick={() => handleRemoveFromWishlist(item.id)}
@@ -38,10 +36,10 @@ const Wishlist = () => {
                         </button>
                     </div>
                 ))}
-                
+
                 <div
                     className="bg-white rounded-lg shadow flex justify-center items-center cursor-pointer"
-                    style={{ height: '250px', width: '150px' }}
+                    style={{ height: '250px', width: '200px' }}  
                     onClick={handleAddMoreItems}
                 >
                     <img src="/assets/add.png" alt="Add Icon" className="w-6 h-6" />

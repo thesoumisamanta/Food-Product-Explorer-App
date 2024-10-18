@@ -30,11 +30,11 @@ const ProductCard = ({ product }) => {
             <div className="w-full md:w-2/3 p-4 flex flex-col">
                 <h2 className="text-xl font-semibold mb-2">{product_name}</h2>
                 <p className="text-sm text-gray-700 mb-2">
-                    <span className="font-semibold">Category:</span> {categories ? truncateText(categories, 20) : 'N/A'}
+                    <span className="font-semibold">Category:</span> {categories ? truncateText(categories, 30) : 'N/A'}
                 </p>
                 {ingredients_text && (
                     <p className="text-sm text-gray-700 mb-2">
-                        <span className="font-semibold">Ingredients:</span> {truncateText(ingredients_text, 30)}
+                        <span className="font-semibold">Ingredients:</span> {truncateText(ingredients_text, 100)}
                     </p>
                 )}
                 {nutrition_grades_tags && nutrition_grades_tags.length > 0 && (
