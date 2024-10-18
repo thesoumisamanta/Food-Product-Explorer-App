@@ -1,17 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
     const { product_name, image_url, categories, ingredients_text, nutrition_grades_tags, code } = product;
+    const navigate = useNavigate();
 
-    // Helper function to truncate text
+    
     const truncateText = (text, limit) => {
         return text.length > limit ? text.slice(0, limit) + '...' : text;
     };
 
+    
+    const handleIconClick = () => {
+        navigate(`/product/${code}`);
+    };
+
     return (
-        <div className="bg-white shadow-lg rounded-lg flex flex-col md:flex-row m-3 w-full">
-            {/* Image Section */}
+        <div className="bg-white shadow-lg rounded-lg flex flex-col md:flex-row m-3 w-full relative">
+            
             <div className="w-full md:w-1/3 p-4 flex items-center justify-center">
                 <img
                     src={image_url}
@@ -20,7 +26,7 @@ const ProductCard = ({ product }) => {
                 />
             </div>
 
-            {/* Content Section */}
+            
             <div className="w-full md:w-2/3 p-4 flex flex-col">
                 <h2 className="text-xl font-semibold mb-2">{product_name}</h2>
                 <p className="text-sm text-gray-700 mb-2">
@@ -36,14 +42,15 @@ const ProductCard = ({ product }) => {
                         <span className="font-semibold">Nutrition Grade:</span> {nutrition_grades_tags[0].toUpperCase()}
                     </p>
                 )}
-
-                <Link
-                    to={`/product/${code}`}
-                    className="mt-auto bg-blue-600 text-white py-2 px-3 rounded-lg hover:bg-blue-700 transition duration-300 w-32 text-center"
-                >
-                    View Details
-                </Link>
             </div>
+
+            
+            <img
+                src="/assets/viewDetails.png" 
+                alt="View Details"
+                className="absolute top-2 right-2 w-6 h-6 cursor-pointer"
+                onClick={handleIconClick}
+            />
         </div>
     );
 };

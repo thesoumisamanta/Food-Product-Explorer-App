@@ -7,13 +7,13 @@ import {
     fetchProductsByCategory,
 } from '../utils/api';
 
-// Define all the product fetching actions (search, filter, barcode, etc.)
+
 export const getProductsByName = createAsyncThunk('products/getProductsByName', async (name) => {
     const response = await fetchProducts(name);
     return response.products;
 });
 
-// New thunk to get product details by barcode
+
 export const getProductDetailsByBarcode = createAsyncThunk(
     'products/getProductDetailsByBarcode',
     async (barcode) => {
@@ -27,7 +27,7 @@ export const getProductDetailsByBarcode = createAsyncThunk(
 
 export const getProductByBarcode = createAsyncThunk('products/getProductByBarcode', async (barcode) => {
     const response = await fetchProductByBarcode(barcode);
-    return [response.product]; // Wrap product in array to maintain structure
+    return [response.product]; 
 });
 
 export const getAllProducts = createAsyncThunk('products/getAllProducts', async () => {
@@ -49,15 +49,15 @@ const productSlice = createSlice({
     name: 'products',
     initialState: {
         products: [],
-        sortedProducts: [], // Keep a separate array for sorted products
+        sortedProducts: [], 
         categories: [],
-        loading: false, // Track loading status
-        productDetails: null, // Add a new state to hold product details
+        loading: false, 
+        productDetails: null, 
     },
     reducers: {
         sortProducts(state, action) {
             const { sortBy } = action.payload;
-            const sortedProducts = [...state.products]; // Clone the original products
+            const sortedProducts = [...state.products]; 
 
             if (sortBy === 'name-asc') {
                 sortedProducts.sort((a, b) => a.product_name.localeCompare(b.product_name));
@@ -69,7 +69,7 @@ const productSlice = createSlice({
                 sortedProducts.sort((a, b) => (b.nutrition_grades || 'E').localeCompare(a.nutrition_grades || 'E'));
             }
 
-            state.sortedProducts = sortedProducts; // Update sortedProducts array
+            state.sortedProducts = sortedProducts; 
         },
     },
     extraReducers: (builder) => {
@@ -80,7 +80,7 @@ const productSlice = createSlice({
             .addCase(getProductsByName.fulfilled, (state, action) => {
                 state.loading = false;
                 state.products = action.payload;
-                state.sortedProducts = action.payload; // Sync sortedProducts with the fetched ones
+                state.sortedProducts = action.payload; 
             })
             .addCase(getProductByBarcode.pending, (state) => {
                 state.loading = true;
@@ -88,14 +88,14 @@ const productSlice = createSlice({
             .addCase(getProductByBarcode.fulfilled, (state, action) => {
                 state.loading = false;
                 state.products = action.payload;
-                state.sortedProducts = action.payload; // Sync sortedProducts with the fetched ones
+                state.sortedProducts = action.payload; 
             })
             .addCase(getProductDetailsByBarcode.pending, (state) => {
-                state.loading = true; // Set loading state when fetching product details
+                state.loading = true; 
             })
             .addCase(getProductDetailsByBarcode.fulfilled, (state, action) => {
                 state.loading = false;
-                state.productDetails = action.payload; // Store product details in the state
+                state.productDetails = action.payload; 
             })
             .addCase(getAllProducts.pending, (state) => {
                 state.loading = true;
@@ -103,7 +103,7 @@ const productSlice = createSlice({
             .addCase(getAllProducts.fulfilled, (state, action) => {
                 state.loading = false;
                 state.products = action.payload;
-                state.sortedProducts = action.payload; // Sync sortedProducts with the fetched ones
+                state.sortedProducts = action.payload; 
             })
             .addCase(getCategories.fulfilled, (state, action) => {
                 state.categories = action.payload;
@@ -114,7 +114,7 @@ const productSlice = createSlice({
             .addCase(getProductsByCategory.fulfilled, (state, action) => {
                 state.loading = false;
                 state.products = action.payload;
-                state.sortedProducts = action.payload; // Sync sortedProducts with the fetched ones
+                state.sortedProducts = action.payload; 
             });
     },
 });

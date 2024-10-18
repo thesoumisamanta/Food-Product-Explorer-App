@@ -12,7 +12,7 @@ const App = () => {
 
   return (
     <>
-      {location.pathname !== '/login' && <Navbar />} {/* Render Navbar except on Login page */}
+      {location.pathname !== '/login' && <Navbar />} 
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<ProductList />} />
@@ -24,7 +24,7 @@ const App = () => {
   );
 };
 
-// Wrap the App component in Router
+
 const AppWithRouter = () => (
   <Router>
     <App />

@@ -38,7 +38,6 @@ const ProductDetail = () => {
         if (!isLoggedIn) {
             navigate('/login');
         } else {
-            console.log('Adding to wishlist:', productDetails); // Debugging line
             const newItem = {
                 id: productDetails.id,
                 name: productDetails.product_name,
@@ -49,9 +48,8 @@ const ProductDetail = () => {
         }
     };
 
-    // Clear flash message after 2 seconds
+    
     useEffect(() => {
-        console.log('Flash Message:', flashMessage); // Debugging line
         if (flashMessage) {
             const timeout = setTimeout(() => {
                 dispatch(clearFlashMessage());
@@ -68,7 +66,7 @@ const ProductDetail = () => {
         );
     }
 
-    // If product not found
+    
     if (!productDetails) {
         return (
             <div className="flex flex-col justify-center items-center min-h-screen">
@@ -81,7 +79,7 @@ const ProductDetail = () => {
     return (
         <div className="container mx-auto px-4 py-8 mt-10">
             <div className="max-w-4xl mx-auto mt-10">
-                {/* Flash Message Display */}
+                
                 {flashMessage && (
                     <div className="mb-4 p-2 bg-green-100 text-green-700 rounded flex justify-between items-center">
                         <span>{flashMessage}</span>
@@ -95,7 +93,7 @@ const ProductDetail = () => {
                     </div>
                 )}
 
-                {/* Product Header */}
+                
                 <div className="mb-8 text-center">
                     <h1 className="text-3xl font-bold mb-4">{productDetails.product_name}</h1>
                     <img
@@ -105,33 +103,36 @@ const ProductDetail = () => {
                     />
                 </div>
 
-                {/* Back to Home Button */}
-                <button
-                    onClick={handleBackToHome}
-                    className="mb-8 px-4 py-2 mx-1 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300"
-                >
-                    Back to Home
-                </button>
+                
+                <div className="flex justify-center space-x-6 mb-8">
+                    
+                    <img
+                        src="/assets/back-to-home.png" 
+                        alt="Back to Home"
+                        className="w-8 h-8 cursor-pointer"
+                        onClick={handleBackToHome}
+                    />
 
-                {/* Add to Cart Button */}
-                <button
-                    onClick={handleAddToCart}
-                    className="mb-8 px-4 py-2 mx-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300"
-                >
-                    Add to Cart
-                </button>
+                    
+                    <img
+                        src="/assets/add-to-cart.png" 
+                        alt="Add to Cart"
+                        className="w-8 h-8 cursor-pointer"
+                        onClick={handleAddToCart}
+                    />
 
-                {/* Add to Wishlist Button */}
-                <button
-                    onClick={handleAddToWishlist}
-                    className="mb-8 px-4 py-2 mx-1 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition duration-300"
-                >
-                    Add to Wishlist
-                </button>
+                    
+                    <img
+                        src="/assets/addToWishlist.png" 
+                        alt="Add to Wishlist"
+                        className="w-8 h-8 cursor-pointer"
+                        onClick={handleAddToWishlist}
+                    />
+                </div>
 
-                {/* Product Information Sections */}
+                
                 <div className="grid gap-6">
-                    {/* Ingredients Section */}
+                    
                     <div className="bg-white rounded-lg shadow p-6">
                         <h2 className="font-bold text-xl mb-4">Ingredients</h2>
                         <p className="text-gray-700">
@@ -139,7 +140,7 @@ const ProductDetail = () => {
                         </p>
                     </div>
 
-                    {/* Nutritional Values Section */}
+                    
                     <div className="bg-white rounded-lg shadow p-6">
                         <h2 className="font-bold text-xl mb-4">Nutritional Values</h2>
                         {productDetails.nutriments ? (
@@ -166,7 +167,7 @@ const ProductDetail = () => {
                         )}
                     </div>
 
-                    {/* Labels Section */}
+                   
                     <div className="bg-white rounded-lg shadow p-6">
                         <h2 className="font-bold text-xl mb-4">Labels</h2>
                         <div className="flex flex-wrap gap-2">

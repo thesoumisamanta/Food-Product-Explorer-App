@@ -47,7 +47,7 @@ const Navbar = () => {
         dispatch(sortProducts({ sortBy: e.target.value }));
     };
 
-    // Handle icon clicks
+    
     const handleViewCart = () => {
         const isLoggedIn = localStorage.getItem('isLoggedIn');
         if (isLoggedIn) {
@@ -76,7 +76,7 @@ const Navbar = () => {
                         </a>
                     </div>
 
-                    {/* Hamburger Menu for Mobile */}
+                   
                     <div className="flex md:hidden">
                         <button
                             onClick={() => setMenuOpen(!menuOpen)}
@@ -99,7 +99,7 @@ const Navbar = () => {
                         </button>
                     </div>
 
-                    {/* Search and Filters for larger screens */}
+                   
                     <div className="hidden md:flex space-x-4 items-center">
                         <input
                             type="text"
@@ -141,17 +141,17 @@ const Navbar = () => {
                             <option value="nutrition-desc">Nutrition Grade (High to Low)</option>
                         </select>
 
-                        {/* Shopping Cart Icon */}
+                        
                         <img
-                            src="/assets/viewCart.png" // Update with the actual path of your cart icon
+                            src="/assets/viewCart.png" 
                             alt="Cart"
                             className="w-8 h-8 cursor-pointer"
                             onClick={handleViewCart}
                         />
 
-                        {/* Wishlist Icon */}
+                        
                         <img
-                            src="/assets/viewWishlist.png" // Update with the actual path of your wishlist icon
+                            src="/assets/viewWishlist.png" 
                             alt="Wishlist"
                             className="w-8 h-8 cursor-pointer"
                             onClick={handleViewWishlist}
@@ -160,7 +160,7 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Menu for smaller screens (hamburger dropdown) */}
+            
             {menuOpen && (
                 <div className="md:hidden">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -204,17 +204,17 @@ const Navbar = () => {
                             <option value="nutrition-desc">Nutrition Grade (High to Low)</option>
                         </select>
 
-                        {/* Shopping Cart Icon in mobile view */}
+                        
                         <img
-                            src="/assets/viewCart.png" // Update with the actual path of your cart icon
+                            src="/assets/viewCart.png" 
                             alt="Cart"
                             className="w-8 h-8 cursor-pointer"
                             onClick={handleViewCart}
                         />
 
-                        {/* Wishlist Icon in mobile view */}
+                        
                         <img
-                            src="/assets/viewWishlist.png" // Update with the actual path of your wishlist icon
+                            src="/assets/viewWishlist.png" 
                             alt="Wishlist"
                             className="w-8 h-8 cursor-pointer"
                             onClick={handleViewWishlist}

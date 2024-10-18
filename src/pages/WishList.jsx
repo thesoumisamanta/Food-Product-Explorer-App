@@ -8,12 +8,12 @@ const Wishlist = () => {
     const navigate = useNavigate();
     const { wishlistItems } = useSelector((state) => state.cart);
 
-    // Handle removal of item from wishlist
+    
     const handleRemoveFromWishlist = (id) => {
         dispatch(removeFromWishlist(id));
     };
 
-    // Handle adding more items by navigating to the home page
+    
     const handleAddMoreItems = () => {
         navigate('/');
     };
@@ -25,10 +25,10 @@ const Wishlist = () => {
                 {wishlistItems.map((item) => (
                     <div key={item.id} className="relative bg-white rounded-lg shadow" style={{ height: '300px', width: '150px' }}>
                         <img
-                            src={item.imageUrl} // Ensure you use the correct property for image URL
-                            alt={item.name} // Ensure you use the correct property for product name
+                            src={item.imageUrl} 
+                            alt={item.name} 
                             className="h-full object-cover rounded-lg"
-                            style={{ display: 'block', margin: '0 auto' }} // Center the image
+                            style={{ display: 'block', margin: '0 auto' }} 
                         />
                         <button
                             onClick={() => handleRemoveFromWishlist(item.id)}
@@ -38,7 +38,7 @@ const Wishlist = () => {
                         </button>
                     </div>
                 ))}
-                {/* Blank white box with Add icon */}
+                
                 <div
                     className="bg-white rounded-lg shadow flex justify-center items-center cursor-pointer"
                     style={{ height: '250px', width: '150px' }}
