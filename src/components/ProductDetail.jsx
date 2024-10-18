@@ -1,32 +1,69 @@
 import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import PulseLoader from 'react-spinners/PulseLoader'; // Import PulseLoader
+import PulseLoader from 'react-spinners/PulseLoader';
 import { getProductDetailsByBarcode } from '../features/productSlice';
+import { addToCart, addToWishlist, clearFlashMessage } from '../features/cartSlice';
 
 const ProductDetail = () => {
     const { barcode } = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { productDetails, loading } = useSelector((state) => state.products);
+    const { productDetails, loading } = useSelector(state => state.products);
+    const { flashMessage } = useSelector(state => state.cart);
 
     useEffect(() => {
         if (barcode) {
-            console.log('Fetching product with barcode:', barcode);
             dispatch(getProductDetailsByBarcode(barcode));
         }
     }, [barcode, dispatch]);
 
-    // Handle "Back to Home" button click
     const handleBackToHome = () => {
         navigate('/');
     };
 
-    // Show loader while loading product details
+    // Add to Cart functionality
+    const handleAddToCart = () => {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (!isLoggedIn) {
+            navigate('/login');
+        } else {
+            dispatch(addToCart(productDetails));
+        }
+    };
+
+    // Add to Wishlist functionality
+    const handleAddToWishlist = () => {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (!isLoggedIn) {
+            navigate('/login');
+        } else {
+            console.log('Adding to wishlist:', productDetails); // Debugging line
+            const newItem = {
+                id: productDetails.id,
+                name: productDetails.product_name,
+                imageUrl: productDetails.image_url,
+            };
+
+            dispatch(addToWishlist(newItem));
+        }
+    };
+
+    // Clear flash message after 2 seconds
+    useEffect(() => {
+        console.log('Flash Message:', flashMessage); // Debugging line
+        if (flashMessage) {
+            const timeout = setTimeout(() => {
+                dispatch(clearFlashMessage());
+            }, 2000);
+            return () => clearTimeout(timeout);
+        }
+    }, [flashMessage, dispatch]);
+
     if (loading) {
         return (
             <div className="flex justify-center items-center min-h-screen">
-                <PulseLoader color="#3498db" loading={true} size={15} /> {/* Spinner */}
+                <PulseLoader color="#3498db" loading={true} size={15} />
             </div>
         );
     }
@@ -42,8 +79,22 @@ const ProductDetail = () => {
     }
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <div className="max-w-4xl mx-auto">
+        <div className="container mx-auto px-4 py-8 mt-10">
+            <div className="max-w-4xl mx-auto mt-10">
+                {/* Flash Message Display */}
+                {flashMessage && (
+                    <div className="mb-4 p-2 bg-green-100 text-green-700 rounded flex justify-between items-center">
+                        <span>{flashMessage}</span>
+                        <button
+                            onClick={() => dispatch(clearFlashMessage())}
+                            className="ml-4 text-red-600 hover:text-red-800 focus:outline-none"
+                            aria-label="Close flash message"
+                        >
+                            &times;
+                        </button>
+                    </div>
+                )}
+
                 {/* Product Header */}
                 <div className="mb-8 text-center">
                     <h1 className="text-3xl font-bold mb-4">{productDetails.product_name}</h1>
@@ -57,9 +108,25 @@ const ProductDetail = () => {
                 {/* Back to Home Button */}
                 <button
                     onClick={handleBackToHome}
-                    className="mb-8 px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300"
+                    className="mb-8 px-4 py-2 mx-1 bg-green-500 text-white rounded-lg hover:bg-green-600 transition duration-300"
                 >
                     Back to Home
+                </button>
+
+                {/* Add to Cart Button */}
+                <button
+                    onClick={handleAddToCart}
+                    className="mb-8 px-4 py-2 mx-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition duration-300"
+                >
+                    Add to Cart
+                </button>
+
+                {/* Add to Wishlist Button */}
+                <button
+                    onClick={handleAddToWishlist}
+                    className="mb-8 px-4 py-2 mx-1 bg-purple-500 text-white rounded-lg hover:bg-purple-600 transition duration-300"
+                >
+                    Add to Wishlist
                 </button>
 
                 {/* Product Information Sections */}
@@ -67,7 +134,9 @@ const ProductDetail = () => {
                     {/* Ingredients Section */}
                     <div className="bg-white rounded-lg shadow p-6">
                         <h2 className="font-bold text-xl mb-4">Ingredients</h2>
-                        <p className="text-gray-700">{productDetails.ingredients_text || 'No ingredients information available'}</p>
+                        <p className="text-gray-700">
+                            {productDetails.ingredients_text || 'No ingredients information available'}
+                        </p>
                     </div>
 
                     {/* Nutritional Values Section */}

@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProductsByName, getCategories, getProductsByCategory, sortProducts, getProductByBarcode } from '../features/productSlice';
+import { useNavigate } from 'react-router-dom';
 
 const Navbar = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { loading } = useSelector((state) => state.products);
     const categories = useSelector((state) => state.products.categories);
     const [searchTerm, setSearchTerm] = useState('');
     const [barcode, setBarcode] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
-    const [menuOpen, setMenuOpen] = useState(false); // For the hamburger menu
+    const [menuOpen, setMenuOpen] = useState(false);
 
     useEffect(() => {
         dispatch(getCategories());
     }, [dispatch]);
 
-    // Fetch products by name as the user types
     useEffect(() => {
         if (searchTerm) {
             const debounceTimeout = setTimeout(() => {
@@ -25,7 +26,6 @@ const Navbar = () => {
         }
     }, [searchTerm, dispatch]);
 
-    // Fetch product by barcode as the user types
     useEffect(() => {
         if (barcode) {
             const debounceTimeout = setTimeout(() => {
@@ -45,6 +45,25 @@ const Navbar = () => {
 
     const handleSort = (e) => {
         dispatch(sortProducts({ sortBy: e.target.value }));
+    };
+
+    // Handle icon clicks
+    const handleViewCart = () => {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (isLoggedIn) {
+            navigate('/cart');
+        } else {
+            navigate('/login');
+        }
+    };
+
+    const handleViewWishlist = () => {
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (isLoggedIn) {
+            navigate('/wishlist');
+        } else {
+            navigate('/login');
+        }
     };
 
     return (
@@ -121,6 +140,22 @@ const Navbar = () => {
                             <option value="nutrition-asc">Nutrition Grade (Low to High)</option>
                             <option value="nutrition-desc">Nutrition Grade (High to Low)</option>
                         </select>
+
+                        {/* Shopping Cart Icon */}
+                        <img
+                            src="/assets/viewCart.png" // Update with the actual path of your cart icon
+                            alt="Cart"
+                            className="w-8 h-8 cursor-pointer"
+                            onClick={handleViewCart}
+                        />
+
+                        {/* Wishlist Icon */}
+                        <img
+                            src="/assets/viewWishlist.png" // Update with the actual path of your wishlist icon
+                            alt="Wishlist"
+                            className="w-8 h-8 cursor-pointer"
+                            onClick={handleViewWishlist}
+                        />
                     </div>
                 </div>
             </div>
@@ -168,6 +203,22 @@ const Navbar = () => {
                             <option value="nutrition-asc">Nutrition Grade (Low to High)</option>
                             <option value="nutrition-desc">Nutrition Grade (High to Low)</option>
                         </select>
+
+                        {/* Shopping Cart Icon in mobile view */}
+                        <img
+                            src="/assets/viewCart.png" // Update with the actual path of your cart icon
+                            alt="Cart"
+                            className="w-8 h-8 cursor-pointer"
+                            onClick={handleViewCart}
+                        />
+
+                        {/* Wishlist Icon in mobile view */}
+                        <img
+                            src="/assets/viewWishlist.png" // Update with the actual path of your wishlist icon
+                            alt="Wishlist"
+                            className="w-8 h-8 cursor-pointer"
+                            onClick={handleViewWishlist}
+                        />
                     </div>
                 </div>
             )}

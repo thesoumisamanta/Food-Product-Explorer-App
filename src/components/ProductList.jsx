@@ -64,7 +64,7 @@ const ProductList = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4 p-4 mt-16" style={{ minHeight: '100vh' }}>
             {loading ? (
                 <div className="col-span-3 flex justify-center my-4">
-                    <PulseLoader color="#3498db" loading={true} size={10} />
+                    <PulseLoader color="#3498db" loading={true} size={15} />
                 </div>
             ) : (
                 sortedProducts.slice(0, visibleProducts).map((product) => (
@@ -74,7 +74,7 @@ const ProductList = () => {
 
             {loadingMore && (
                 <div className="col-span-3 flex justify-center my-4">
-                    <PulseLoader color="#3498db" loading={true} size={10} />
+                    <PulseLoader color="#3498db" loading={true} size={15} />
                 </div>
             )}
         </div>
