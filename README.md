@@ -35,24 +35,25 @@ To get started with the Food Explorer App, follow these steps:
     ```bash
     npm install
 
+4. **To run the application locally, use the following command**:
+    ```bash
+    npm start
+
 3. **Install Additional Packages: Install the gh-pages package for deployment**:
     ```bash
     npm install gh-pages --save-dev
 
-4. ### Set Up Redux: 
+ ### Set Up Redux: 
 Create a Redux store to manage application state. Add necessary slices for handling products, cart, and wishlist.
 
-5. ### Configure Routing: 
+ ### Configure Routing: 
 Set up routing using React Router for navigation between the Home, Product Details, Cart, and Wishlist pages.
 
-6. ### Integrate TailwindCSS: 
+ ### Integrate TailwindCSS: 
 Follow the TailwindCSS installation guide to configure your project with Tailwind.
 
-7. ### Connect to OpenFoodFacts API: 
+ ### Connect to OpenFoodFacts API: 
 Use the API to fetch product data and handle user searches, filters, and barcode lookups.
 
-8. **To run the application locally, use the following command**:
-    ```bash
-    npm start
 
 ## This will start the development server and open the app in your default web browser at http://localhost:3000.
