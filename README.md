@@ -31,7 +31,7 @@ To get started with the Food Explorer App, follow these steps:
    git clone https://github.com/<your-username>/<repository-name>.git
    cd <repository-name>
 
-# Install Dependencies: Install the required libraries using npm:
+2. **Install Dependencies: Install the required libraries using npm**:
     ```bash
     npm install
 
