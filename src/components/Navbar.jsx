@@ -14,6 +14,8 @@ const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
 
     const isHomePage = location.pathname === '/';
+    const isCartPage = location.pathname === '/cart';
+    const isWishlistPage = location.pathname === '/wishlist';
 
     useEffect(() => {
         if (!isHomePage) {
@@ -82,7 +84,7 @@ const Navbar = () => {
             <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-10">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
-                        
+
                         <div
                             onClick={handleLogoClick}
                             className="flex items-center justify-start w-12 h-12 cursor-pointer"
@@ -90,31 +92,34 @@ const Navbar = () => {
                             <img src="/assets/food.png" alt="Logo" className="h-8" />
                         </div>
 
-                        
+
                         <div className="md:hidden flex absolute inset-x-0 justify-center">
-                            <button
-                                onClick={handleViewCart}
-                                className="w-12 h-12 flex items-center justify-center cursor-pointer mx-1"
-                            >
-                                <img
-                                    src="/assets/viewCart.png"
-                                    alt="Cart"
-                                    className="w-8 h-8"
-                                />
-                            </button>
-                            <button
-                                onClick={handleViewWishlist}
-                                className="w-12 h-12 flex items-center justify-center cursor-pointer mx-1"
-                            >
-                                <img
-                                    src="/assets/wish-list.png"
-                                    alt="Wishlist"
-                                    className="w-8 h-8"
-                                />
-                            </button>
+                            {!isCartPage && (
+                                <button
+                                    onClick={handleViewCart}
+                                    className="w-12 h-12 flex items-center justify-center cursor-pointer mx-1"
+                                >
+                                    <img
+                                        src="/assets/viewCart.png"
+                                        alt="Cart"
+                                        className="w-8 h-8"
+                                    />
+                                </button>
+                            )}
+                            {!isWishlistPage && (
+                                <button
+                                    onClick={handleViewWishlist}
+                                    className="w-12 h-12 flex items-center justify-center cursor-pointer mx-1"
+                                >
+                                    <img
+                                        src="/assets/wish-list.png"
+                                        alt="Wishlist"
+                                        className="w-8 h-8"
+                                    />
+                                </button>
+                            )}
                         </div>
 
-                        
                         {isHomePage && (
                             <div className="md:hidden z-20">
                                 <button
@@ -139,7 +144,6 @@ const Navbar = () => {
                             </div>
                         )}
 
-                        
                         <div className="hidden md:flex space-x-4 items-center">
                             {isHomePage && (
                                 <>
@@ -185,32 +189,34 @@ const Navbar = () => {
                                 </>
                             )}
 
-                            
-                            <button
-                                onClick={handleViewCart}
-                                className="w-12 h-12 flex items-center justify-center cursor-pointer"
-                            >
-                                <img
-                                    src="/assets/viewCart.png"
-                                    alt="Cart"
-                                    className="w-8 h-8"
-                                />
-                            </button>
-                            <button
-                                onClick={handleViewWishlist}
-                                className="w-12 h-12 flex items-center justify-center cursor-pointer"
-                            >
-                                <img
-                                    src="/assets/wish-list.png"
-                                    alt="Wishlist"
-                                    className="w-8 h-8"
-                                />
-                            </button>
+                            {!isCartPage && (
+                                <button
+                                    onClick={handleViewCart}
+                                    className="w-12 h-12 flex items-center justify-center cursor-pointer"
+                                >
+                                    <img
+                                        src="/assets/viewCart.png"
+                                        alt="Cart"
+                                        className="w-8 h-8"
+                                    />
+                                </button>
+                            )}
+                            {!isWishlistPage && (
+                                <button
+                                    onClick={handleViewWishlist}
+                                    className="w-12 h-12 flex items-center justify-center cursor-pointer"
+                                >
+                                    <img
+                                        src="/assets/wish-list.png"
+                                        alt="Wishlist"
+                                        className="w-8 h-8"
+                                    />
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>
 
-                
                 {isHomePage && menuOpen && (
                     <div className="md:hidden absolute w-full bg-white shadow-lg">
                         <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -257,7 +263,7 @@ const Navbar = () => {
                     </div>
                 )}
             </nav>
-            
+
             <div className="h-16"></div>
         </div>
     );

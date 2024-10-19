@@ -32,7 +32,7 @@ const Wishlist = () => {
                             onClick={() => handleRemoveFromWishlist(item.id)}
                             className="absolute inset-0 flex justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-200"
                         >
-                            <img src="/assets/remove.png" alt="Remove" className="w-5 h-5" />
+                            <img src="/assets/remove.png" alt="Remove" className="w-10 h-10 bg-red-700 rounded-full p-2" />
                         </button>
                     </div>
                 ))}
